@@ -11,7 +11,7 @@ import styles from '../../styles/Sobre.module.css'
 export default () => {
     return (
         <>
-            <Head title='Sobre | Gerar Link de contato direto whatsapp' />
+            <Head title='Gerador de  Link para conversas diretas no whatsapp | [ Gerar Link de contato whatsApp ]' />
             <Header/>
                 <div div className={styles.Sobre}>
                     <div className={styles.description}>
