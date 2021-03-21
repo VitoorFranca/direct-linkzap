@@ -15,6 +15,8 @@ export default () => {
         //Function generate a link or Show a Alert message
     function generateLink(number, message){
 
+        number ? number = +number.split('').filter(n => n != ' ').join('') : null
+
         if(number){
             setIsGenerated(true)
             let messageFormated = window.encodeURIComponent(message) //Formats the message to link
@@ -38,34 +40,47 @@ export default () => {
         setDisplay('flex')
     }
 
+    function generateNewLin(){
+        setIsGenerated(false)
+        setDisplay('none')
+    }
+
+    const ModalAlert = () => (
+        <div className={styles.modalAlert}>
+            <spam>Insira seu Numero</spam>
+        </div>
+    )
+  
+
     return (
         <div className={styles.contents}>
             {isGenerated ? (
                 <>
 
                     <div className={styles.modalLink}>
-                        <p>Your link:</p>
+                        <p>Seu Link:</p>
                         <input type='text' value={link} className='link' />
                     </div>
 
-                    <span id="sucsessText" style={{display: display}} className={styles.copiedSuccess}>Successful &#10003;</span>
+                    <span id="sucsessText" style={{display: display}} className={styles.copiedSuccess}>Successful <i class='bx bx-check-circle' /></span>
 
                     <div className={styles.btsControls}>
                         <button className={styles.btn} 
-                            onClick={copyLink}>Copy</button>
+                            onClick={copyLink}>Copiar Link</button>
 
                         <button className={styles.btn}
                             style={{width: '200px'}}
-                            onClick={() => setIsGenerated(false)}>Generate a new Link</button>
+                            onClick={generateNewLin}>Gerar um novo link</button>
                     </div>
 
                 </>
         ) : (
+            <>
                 <form className={styles.form}
                     onSubmit={generate}
                     action="">
     
-                    <label htmlFor="numInput">Numero</label>
+                    <label htmlFor="numInput">Numero do Celular</label>
                     <input className={styles.inputNum}
                         id="numInput"
                         type="text"
@@ -85,13 +100,19 @@ export default () => {
                         type="submit"
                         value="Gerar Link" />
                 </form>
+
+                {isIncorrect && <ModalAlert />}
+
+                <div className={styles.tutorial}>
+                    <p>Tutorial rapido</p>
+                    <label htmlFor="numInput"><span>1.</span> Insira o nº do WhatsApp Ex: 99 9 1234-5678</label> <br/>
+                    <label htmlFor="txtInput"><span>2.</span> Escreva a mensagem que será exibida</label> <br/>
+                    <label htmlFor="numInput"><span>3.</span> Clique no botão "<strong>GERAR LINK”</strong></label> <br/> 
+                    <label htmlFor="numInput"><span>4.</span> Copie o link e compartilhe</label> <br/>
+                </div>
+                </>
         )}
 
-        {isIncorrect && (
-            <div className={styles.modalAlert}>
-                <p>Verifique os campos e tente novamente</p>
-            </div>
-        )}
             
         </div>
     )
